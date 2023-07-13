@@ -106,7 +106,7 @@ const Post = styled.div`
 	text-align: left;
 	min-width: 80vw;
 	${dark({
-		color: "#f8f9fa",
+		color: "black",
 	})}
 	${tablet({
 		padding: "10px",
