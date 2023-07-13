@@ -19,6 +19,8 @@ https://zasada94.github.io/blogsearch/
 - install dependencies with npm command through terminal: "npm install",
 - use "cd blogsearch" (change direction) command to get into apps main folder,
 - start app live version with "npm start" command.
+  
+* to install node.js server version- replace getPosts function in App.js file, start server with "node server.js" command in terminal in main folder. Start live preview with "npm start" command.
 
 ## Technologies
 
