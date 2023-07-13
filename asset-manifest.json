@@ -1,0 +1,10 @@
+{
+  "files": {
+    "main.js": "/blogsearch/static/js/main.c463b764.js",
+    "index.html": "/blogsearch/index.html",
+    "main.c463b764.js.map": "/blogsearch/static/js/main.c463b764.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.c463b764.js"
+  ]
+}
