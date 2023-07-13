@@ -26,6 +26,7 @@ const Container = styled.div`
 
 const Title = styled.h1`
 	font-size: 36px;
+	font-weight: 900;
 	${tablet({
 		fontSize: "32px",
 	})}
@@ -33,15 +34,19 @@ const Title = styled.h1`
 
 const Input = styled.input`
 	padding: 8px 10px;
-	font-size: 16px;
+	font-size: 18px;
 	margin: 15px 30px;
 	border-radius: 10px;
 	border: 1px solid black;
 	max-width: 80vw;
+	${tablet({
+		fontSize: "16px",
+	})}
 `;
 
 const Button = styled.button`
 	font-weight: 700;
+	font-size: 16px;
 	padding: 8px 16px;
 	margin-bottom: 15px;
 	background-color: white;
@@ -58,50 +63,64 @@ const Button = styled.button`
 		transition: all 250ms linear;
 		box-shadow: 4px 4px 0px 0px rgb(0, 0, 0);
 	}
+	${tablet({
+		fontSize: "14px",
+	})}
 `;
 
 const ResultsWrapper = styled.div`
 	max-width: 1200px;
 	margin: 0 100px;
-	${mobile({
-		margin: "0 30px",
-	})}
 	${tablet({
 		margin: "0 50px",
+	})}
+	${mobile({
+		margin: "0 30px",
 	})}
 `;
 
 const Post = styled.div`
 	margin-bottom: 20px;
+	padding: 20px;
+	background-color: #f6f6f6;
+	border: 2px solid black;
+	border-radius: 10px;
 	text-align: left;
+	min-width: 80vw;
 	${dark({
 		color: "#f8f9fa",
+	})}
+	${tablet({
+		padding: "10px",
 	})}
 `;
 
 const PostTitle = styled.h2`
 	margin-bottom: 5px;
-	${mobile({
-		fontSize: "18px",
-	})}
+	padding-bottom: 5px;
 	${tablet({
 		fontSize: "22px",
 	})}
+	${mobile({
+		fontSize: "18px",
+	})}
+	border-bottom: 1px solid black;
 `;
 
 const PostBody = styled.p`
 	font-size: 17px;
-	${mobile({
-		fontSize: "15px",
-	})}
 	${tablet({
 		fontSize: "16px",
+	})}
+	${mobile({
+		fontSize: "15px",
 	})}
 `;
 
 function App() {
 	const [searchInput, setSearchInput] = useState("");
 	const [results, setResults] = useState([]);
+	const [isFetched, setIsFetched] = useState(false);
 
 	const getPosts = () => {
 		fetch("https://jsonplaceholder.typicode.com/posts")
@@ -113,10 +132,17 @@ function App() {
 
 				filteredPosts.sort((a, b) => b.title.length - a.title.length);
 				setResults(filteredPosts);
+				setIsFetched(true);
 			})
 			.catch((error) => {
 				console.log("Error fetching posts:", error);
 			});
+	};
+
+	const handleKeyPress = (event) => {
+		if (event.keyCode === 13 || event.which === 13) {
+			getPosts();
+		}
 	};
 
 	return (
@@ -127,15 +153,26 @@ function App() {
 				placeholder="Search by title..."
 				value={searchInput}
 				onChange={(e) => setSearchInput(e.target.value)}
+				onKeyPress={handleKeyPress}
 			></Input>
 			<Button onClick={getPosts}>SEARCH</Button>
 			<ResultsWrapper>
-				{results.map((post) => (
-					<Post key={post.id}>
-						<PostTitle>{post.title}</PostTitle>
-						<PostBody>{post.body}</PostBody>
-					</Post>
-				))}
+				{isFetched ? (
+					results.length === 0 ? (
+						<Post>
+							<PostBody>No results found.</PostBody>
+						</Post>
+					) : (
+						results.map((post) => (
+							<Post key={post.id}>
+								<PostTitle>{post.title}</PostTitle>
+								<PostBody>{post.body}</PostBody>
+							</Post>
+						))
+					)
+				) : (
+					""
+				)}
 			</ResultsWrapper>
 		</Container>
 	);
