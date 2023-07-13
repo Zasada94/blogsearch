@@ -157,12 +157,13 @@ function App() {
 			});
 	};
 
-	//REPLACE GETPOSTS FUNCTION FOR NODE SERVER VERSION
+	// REPLACE GETPOSTS FUNCTION FOR NODE SERVER VERSION
 	// const getPosts = () => {
 	// 	fetch("http://localhost:5000/search?q=" + searchInput)
 	// 		.then((response) => response.json())
 	// 		.then((posts) => {
 	// 			setResults(posts);
+	// 			setIsFetched(true);
 	// 		})
 	// 		.catch((error) => {
 	// 			console.log("Error fetching posts:", error);
