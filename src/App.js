@@ -3,6 +3,7 @@ import { styled } from "styled-components";
 import { mobile, tablet, dark } from "./responsive.js";
 
 const Container = styled.div`
+	color: black;
 	display: -webkit-box;
 	display: -ms-flexbox;
 	display: flex;
@@ -31,12 +32,6 @@ const Container = styled.div`
 	);
 	${mobile({
 		padding: "20px 0",
-	})}
-	${dark({
-		background:
-			"linear-gradient(0deg,rgba(0, 0, 0, 0.7) 0%,rgba(0, 67, 255, 0.7) 100%)",
-		background:
-			"-webkit-gradient(linear, left bottom, left top, from(rgba(0, 0, 0, 0.7)), to(rgba(0, 67, 255, 0.7)));",
 	})}
 `;
 
@@ -100,14 +95,10 @@ const ResultsWrapper = styled.div`
 const Post = styled.div`
 	margin-bottom: 20px;
 	padding: 20px;
-	background-color: #f6f6f6;
+	background-color: white;
 	border: 2px solid black;
 	border-radius: 10px;
 	text-align: left;
-	min-width: 80vw;
-	${dark({
-		color: "black",
-	})}
 	${tablet({
 		padding: "10px",
 	})}
