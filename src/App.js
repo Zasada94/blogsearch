@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { styled } from "styled-components";
-import { mobile, tablet } from "./responsive";
+import { mobile, tablet, dark } from "./responsive";
 
 const Container = styled.div`
 	display: flex;
@@ -8,17 +8,22 @@ const Container = styled.div`
 	align-items: center;
 	text-align: center;
 	overflow: hidden;
+	min-height: 100vh;
+	padding: 30px 0;
 	background: linear-gradient(
 		0deg,
 		rgba(255, 255, 255, 0) 0%,
 		rgba(0, 67, 255, 0.7) 100%
 	);
-	min-height: 100vh;
-	padding: 30px 0;
 	${mobile({
 		padding: "20px 0",
 	})}
+	${dark({
+		background:
+			"linear-gradient(0deg,rgba(0, 0, 0, 0.7) 0%,rgba(0, 67, 255, 0.7) 100%)",
+	})}
 `;
+
 const Title = styled.h1`
 	font-size: 36px;
 	${tablet({
@@ -45,7 +50,6 @@ const Button = styled.button`
 	cursor: pointer;
 	box-shadow: 5px 5px 0px 0px rgb(0, 0, 0);
 	border-radius: 10px;
-
 	&:hover {
 		background-color: #dadada;
 		border: 1px solid black;
@@ -62,7 +66,7 @@ const ResultsWrapper = styled.div`
 	${mobile({
 		margin: "0 30px",
 	})}
-		${tablet({
+	${tablet({
 		margin: "0 50px",
 	})}
 `;
@@ -70,6 +74,9 @@ const ResultsWrapper = styled.div`
 const Post = styled.div`
 	margin-bottom: 20px;
 	text-align: left;
+	${dark({
+		color: "#f8f9fa",
+	})}
 `;
 
 const PostTitle = styled.h2`
