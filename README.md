@@ -9,7 +9,7 @@ Solved recruitment task - simple web app to search blog posts
 - [Functionalities](#functionalities)
 
 ## Live
-https://zasada94.github.io/pissesmeoff/
+https://zasada94.github.io/blogsearch/
 
 ## How To Install
 
