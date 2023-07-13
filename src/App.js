@@ -1,15 +1,29 @@
 import { useState } from "react";
 import { styled } from "styled-components";
-import { mobile, tablet, dark } from "./responsive";
+import { mobile, tablet, dark } from "./responsive.js";
 
 const Container = styled.div`
+	display: -webkit-box;
+	display: -ms-flexbox;
 	display: flex;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-ms-flex-direction: column;
 	flex-direction: column;
+	-webkit-box-align: center;
+	-ms-flex-align: center;
 	align-items: center;
 	text-align: center;
 	overflow: hidden;
 	min-height: 100vh;
 	padding: 30px 0;
+	background: -webkit-gradient(
+		linear,
+		left bottom,
+		left top,
+		from(rgba(255, 255, 255, 0)),
+		to(rgba(0, 67, 255, 0.7))
+	);
 	background: linear-gradient(
 		0deg,
 		rgba(255, 255, 255, 0) 0%,
@@ -21,6 +35,8 @@ const Container = styled.div`
 	${dark({
 		background:
 			"linear-gradient(0deg,rgba(0, 0, 0, 0.7) 0%,rgba(0, 67, 255, 0.7) 100%)",
+		background:
+			"-webkit-gradient(linear, left bottom, left top, from(rgba(0, 0, 0, 0.7)), to(rgba(0, 67, 255, 0.7)));",
 	})}
 `;
 
@@ -54,6 +70,7 @@ const Button = styled.button`
 	border: 1px solid rgba(0, 0, 0, 0);
 	cursor: pointer;
 	box-shadow: 5px 5px 0px 0px rgb(0, 0, 0);
+	-webkit-box-shadow: 5px 5px 0px 0px rgb(0, 0, 0);
 	border-radius: 10px;
 	&:hover {
 		background-color: #dadada;
@@ -62,6 +79,7 @@ const Button = styled.button`
 		text-shadow: -1px -1px 0 #cdcdcd;
 		transition: all 250ms linear;
 		box-shadow: 4px 4px 0px 0px rgb(0, 0, 0);
+		-webkit-box-shadow: 4px 4px 0px 0px rgb(0, 0, 0);
 	}
 	${tablet({
 		fontSize: "14px",
@@ -135,9 +153,21 @@ function App() {
 				setIsFetched(true);
 			})
 			.catch((error) => {
-				console.log("Error fetching posts:", error);
+				console.log("Error:", error);
 			});
 	};
+
+	//REPLACE GETPOSTS FUNCTION FOR NODE SERVER VERSION
+	// const getPosts = () => {
+	// 	fetch("http://localhost:5000/search?q=" + searchInput)
+	// 		.then((response) => response.json())
+	// 		.then((posts) => {
+	// 			setResults(posts);
+	// 		})
+	// 		.catch((error) => {
+	// 			console.log("Error fetching posts:", error);
+	// 		});
+	// };
 
 	const handleKeyPress = (event) => {
 		if (event.keyCode === 13 || event.which === 13) {
