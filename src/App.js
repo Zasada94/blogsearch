@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { styled } from "styled-components";
-import { mobile, tablet, dark } from "./responsive.js";
+import { mobile, tablet, dark } from "./functions/responsive.js";
+import { getPosts } from "./functions/getPost.js";
+import Post from "./components/Post.js";
 
 const Container = styled.div`
 	color: black;
@@ -92,78 +94,18 @@ const ResultsWrapper = styled.div`
 	})}
 `;
 
-const Post = styled.div`
-	margin-bottom: 20px;
-	padding: 20px;
-	background-color: white;
-	border: 2px solid black;
-	border-radius: 10px;
-	text-align: left;
-	${tablet({
-		padding: "10px",
-	})}
-`;
-
-const PostTitle = styled.h2`
-	margin-bottom: 5px;
-	padding-bottom: 5px;
-	${tablet({
-		fontSize: "22px",
-	})}
-	${mobile({
-		fontSize: "18px",
-	})}
-	border-bottom: 1px solid black;
-`;
-
-const PostBody = styled.p`
-	font-size: 17px;
-	${tablet({
-		fontSize: "16px",
-	})}
-	${mobile({
-		fontSize: "15px",
-	})}
-`;
-
 function App() {
 	const [searchInput, setSearchInput] = useState("");
 	const [results, setResults] = useState([]);
 	const [isFetched, setIsFetched] = useState(false);
 
-	const getPosts = () => {
-		fetch("https://jsonplaceholder.typicode.com/posts")
-			.then((response) => response.json())
-			.then((posts) => {
-				const filteredPosts = posts.filter((post) =>
-					post.title.toLowerCase().includes(searchInput.toLowerCase())
-				);
-
-				filteredPosts.sort((a, b) => b.title.length - a.title.length);
-				setResults(filteredPosts);
-				setIsFetched(true);
-			})
-			.catch((error) => {
-				console.log("Error:", error);
-			});
+	const fetchPosts = () => {
+		getPosts(searchInput, setResults, setIsFetched);
 	};
-
-	// REPLACE GETPOSTS FUNCTION FOR NODE SERVER VERSION
-	// const getPosts = () => {
-	// 	fetch("http://localhost:5000/search?q=" + searchInput)
-	// 		.then((response) => response.json())
-	// 		.then((posts) => {
-	// 			setResults(posts);
-	// 			setIsFetched(true);
-	// 		})
-	// 		.catch((error) => {
-	// 			console.log("Error fetching posts:", error);
-	// 		});
-	// };
 
 	const handleKeyPress = (event) => {
 		if (event.keyCode === 13 || event.which === 13) {
-			getPosts();
+			fetchPosts();
 		}
 	};
 
@@ -177,19 +119,14 @@ function App() {
 				onChange={(e) => setSearchInput(e.target.value)}
 				onKeyPress={handleKeyPress}
 			></Input>
-			<Button onClick={getPosts}>SEARCH</Button>
+			<Button onClick={fetchPosts}>SEARCH</Button>
 			<ResultsWrapper>
 				{isFetched ? (
 					results.length === 0 ? (
-						<Post>
-							<PostBody>No results found.</PostBody>
-						</Post>
+						<Post title="no results found"></Post>
 					) : (
 						results.map((post) => (
-							<Post key={post.id}>
-								<PostTitle>{post.title}</PostTitle>
-								<PostBody>{post.body}</PostBody>
-							</Post>
+							<Post key={post.id} title={post.title} body={post.body}></Post>
 						))
 					)
 				) : (
